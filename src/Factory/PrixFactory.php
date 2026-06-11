@@ -31,10 +31,12 @@ class PrixFactory
         string $prixAffiche,
         string $prixPar,
         bool $mettreEnAvant = false,
+        ?string $formuleContact = null,
         array $infos = [],
     ): Prix {
         $prix = new Prix($nom, $prixAffiche, $prixPar);
         $prix->setMettreEnAvant($mettreEnAvant);
+        $prix->setFormuleContact($formuleContact);
 
         foreach ($infos as $info) {
             $this->ajouterInfo($prix, $info);
@@ -76,6 +78,7 @@ class PrixFactory
         ?string $prixAffiche = null,
         ?string $prixPar = null,
         ?bool $mettreEnAvant = null,
+        ?string $formuleContact = null,
         ?array $infos = null,
     ): Prix {
         if (null !== $nom) {
@@ -90,6 +93,8 @@ class PrixFactory
         if (null !== $mettreEnAvant) {
             $prix->setMettreEnAvant($mettreEnAvant);
         }
+
+        $prix->setFormuleContact($formuleContact);
 
         if (null !== $infos) {
             // Supprime les anciennes infos avant de recréer les nouvelles.
@@ -174,6 +179,7 @@ class PrixFactory
                 'prixAffiche'   => $prix->getPrixAffiche(),
                 'prixPar'       => $prix->getPrixPar(),
                 'mettreEnAvant' => $prix->isMettreEnAvant(),
+                'formuleContact' => $prix->getFormuleContact() ?? 'Contacter nous',
                 'infos'         => $infos,
             ];
         }

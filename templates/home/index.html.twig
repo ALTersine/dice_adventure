@@ -10,34 +10,20 @@
     </svg>
 {% endmacro %}
 
-{% macro d6() %}
-    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="50,8 86,29 50,50 14,29"/>
-        <polygon points="14,29 50,50 50,92 14,71"/>
-        <polygon points="86,29 50,50 50,92 86,71"/>
-        <circle cx="50" cy="27" r="3.2" fill="currentColor" stroke="none"/>
-        <circle cx="31" cy="58" r="3.2" fill="currentColor" stroke="none"/>
-        <circle cx="31" cy="72" r="3.2" fill="currentColor" stroke="none"/>
-        <circle cx="69" cy="50" r="3.2" fill="currentColor" stroke="none"/>
-        <circle cx="69" cy="64" r="3.2" fill="currentColor" stroke="none"/>
-    </svg>
+{% macro d6_1() %}
+    <img src="{{asset('img/dice_one.svg')}}" alt="">
 {% endmacro %}
 
-{% macro d4() %}
-    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="50,6 92,86 8,86"/>
-        <path d="M50,6 50,64 M50,64 8,86 M50,64 92,86"/>
-        <text x="50" y="58" text-anchor="middle" font-size="16" stroke="none" fill="currentColor" font-family="Cinzel, serif" font-weight="700">4</text>
-    </svg>
+{% macro d6_2() %}
+    <img src="{{asset('img/dice_two.svg')}}" alt="">
 {% endmacro %}
 
-{% macro d10() %}
-    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="50,5 84,38 68,70 32,70 16,38"/>
-        <polygon points="32,70 68,70 50,95"/>
-        <path d="M50,5 50,44 M16,38 50,44 M84,38 50,44 M50,44 32,70 M50,44 68,70"/>
-        <text x="50" y="40" text-anchor="middle" font-size="13" stroke="none" fill="currentColor" font-family="Cinzel, serif" font-weight="700">100</text>
-    </svg>
+{% macro d6_4() %}
+    <img src="{{asset('img/dice_four.svg')}}" alt="">
+{% endmacro %}
+
+{% macro d6_6() %}
+    <img src="{{asset('img/dice_six.svg')}}" alt="">
 {% endmacro %}
 
 {% import _self as dice %}
@@ -47,11 +33,12 @@
 {# =================== HERO =================== #}
 <section class="hero">
     <div class="hero__dice" aria-hidden="true">
+        <span class="die-deco d2">{{ dice.d6_2() }}</span>
         <span class="die-deco d1">{{ dice.d20() }}</span>
-        <span class="die-deco d2">{{ dice.d6() }}</span>
+        <span class="die-deco d2">{{ dice.d6_1() }}</span>
         <span class="die-deco d3">{{ dice.d20() }}</span>
-        <span class="die-deco d4">{{ dice.d4() }}</span>
-        <span class="die-deco d5">{{ dice.d10() }}</span>
+        <span class="die-deco d4">{{ dice.d6_4() }}</span>
+        <span class="die-deco d5">{{ dice.d6_6() }}</span>
     </div>
     <div class="hero__inner">
         <p class="hero__eyebrow">Maître du jeu · Jeu de rôle sur table</p>
@@ -82,17 +69,17 @@
     </div>
     <div class="grid grid--3">
         <article class="card">
-            <div class="card__die">{{ dice.d20() }}</div>
+            <div class="card__die">{{ dice.d6_1() }}</div>
             <h3>Des histoires sur mesure</h3>
             <p>Chaque campagne est écrite pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
         </article>
         <article class="card">
-            <div class="card__die">{{ dice.d6() }}</div>
+            <div class="card__die">{{ dice.d20() }}</div>
             <h3>Tout le matériel fourni</h3>
             <p>Dés, fiches de personnages, plateaux et figurines : sortez simplement le sac à dos, ouvrez une potion, et plongez dans le donjon.</p>
         </article>
         <article class="card">
-            <div class="card__die">{{ dice.d4() }}</div>
+            <div class="card__die">{{ dice.d6_6() }}</div>
             <h3>Un maître du jeu dédié</h3>
             <p>Je gère les règles, les monstres et le suspense pour que vous viviez chaque rebondissement sans jamais décrocher de l'histoire.</p>
         </article>
@@ -121,22 +108,22 @@
     </div>
     <div class="steps">
         <div class="step">
-            <div class="step__die">{{ dice.d4() }}</div>            
+            <div class="step__die">{{ dice.d6_1() }}</div>            
             <h3>Premier jet : On échange</h3>
             <p>Vous me dites qui joue, vos envies et votre niveau. Je propose un univers.</p>
         </div>
         <div class="step">
-            <div class="step__die">{{ dice.d6() }}</div>
+            <div class="step__die">{{ dice.d6_2() }}</div>
             <h3>Second jet : Je prépare</h3>
             <p>J'écris le scénario, crée vos personnages et prépare tout le matériel.</p>
         </div>
         <div class="step">
-            <div class="step__die">{{ dice.d10() }}</div>
+            <div class="step__die">{{ dice.d6_4() }}</div>
             <h3>Troisième jet : On se réunit</h3>
             <p>Chez vous ou sur le lieu de votre choix, autour de la table on se prépare à l'aventure.</p>
         </div>
         <div class="step">
-            <div class="step__die">{{ dice.d20() }}</div>
+            <div class="step__die">{{ dice.d6_6() }}</div>
             <h3>Quatrième jet : On joue</h3>
             <p>Je mène l'aventure, vous prenez les décisions. Arriverez-vous au bout de la quête ?</p>
         </div>
@@ -182,39 +169,21 @@
             <p>De la première partie d'initiation à la grande campagne épique, il y a une aventure pour chaque groupe.</p>
         </div>
         <div class="grid grid--3">
-            <article class="formule">
-                <h3>Campagne</h3>
-                <p class="formule__price"><!--tarrif.campagne-->€* <span>/ joueur · séance</span></p>
-                <ul>
-                    <li>Une histoire au long cours</li>
-                    <li>Personnages qui évoluent</li>
-                    <li>Donjons, intrigues &amp; boss</li>
-                    <li>Séances régulières à votre rythme</li>
-                </ul>
-                <a class="btn btn--dark" href="#contact">Lancer la campagne</a>
-            </article>
-            <article class="formule formule--phare">
+        {% for prix in tarrif %}
+        <article class="formule {{prix.mettreEnAvant ? 'formule--phare' : ''}}">
+            {% if prix.mettreEnAvant %}
             <span class="formule__badge">Le plus choisi</span>
-                <h3>Initiation</h3>
-                <p class="formule__price"><!--tarrif.seance-->€* <span>/ séance · 4h</span></p>
+            {% endif %}
+                <h3>{{prix.nom}}</h3>
+                <p class="formule__price">{{prix.prixAffiche}}<span>/ {{prix.prixPar}}</span></p>
                 <ul>
-                    <li>Découverte du jeu de rôle pour 3 à 6 joueurs</li>
-                    <li>Personnages prêts à jouer</li>
-                    <li>Un scénario d'une séance</li>
-                    <li>Idéal entre amis ou en famille</li>
+                {% for info in prix.infos %}
+                    <li>{{info}}</li>
+                {% endfor %}
                 </ul>
-                <a class="btn btn--primary" href="#contact">Réserver l'initiation</a>
+                <a class="btn {{prix.mettreEnAvant ? 'btn--primary' : 'btn--dark'}}" href="#contact">{{prix.formuleContact}}</a>
             </article>
-            <article class="formule">
-                <h3>Événement</h3>
-                <p class="formule__price">Sur devis <span>· particulier · entreprise</span></p>
-                <ul>
-                    <li>Anniversaires, team building, EVJF/EVG (Enterrement Vie de Jeune Fille / Garçon), cohésion d'équipe...</li>
-                    <li>Formule entièrement adaptable à vos besoins</li>
-                    <li>Scénario et thématique sur mesure</li>
-                </ul>
-                <a class="btn btn--dark" href="#contact">Demander un devis</a>
-            </article>
+        {% endfor %}
         </div>
         <div>
         <p>*+ Frais kilométriques ({{fraisKilometrique}})</p>
@@ -229,21 +198,15 @@
         <h2>Ce que disent les aventuriers</h2>
     </div>
     <div class="quotes">
+        {% for avis in avisList %}
         <figure class="quote">
-            <div class="stars">★★★★★</div>
-            <p>« On n'avait jamais fait de jeu de rôle. Au bout de dix minutes, on était complètement dans l'histoire. Soirée inoubliable ! »</p>
-            <figcaption class="who">— Camille &amp; sa bande</figcaption>
+            <div class="stars">{% for i in 1..avis.note %}★{% endfor %}{% if avis.note < 5 %}{% for i in avis.note + 1..5 %}☆{% endfor %}{% endif %}</div>
+            <p>« {{ avis.message }} »</p>
+            <figcaption class="who">— {{ avis.auteur }}{% if avis.infosSuppAuteur %}, {{ avis.infosSuppAuteur }}{% endif %}</figcaption>
         </figure>
-        <figure class="quote">
-            <div class="stars">★★★★★</div>
-            <p>« Un maître du jeu en or. Les rebondissements, les voix des personnages, le suspense… On a réservé la suite de la campagne aussitôt. »</p>
-            <figcaption class="who">— Thomas, joueur régulier</figcaption>
-        </figure>
-        <figure class="quote">
-            <div class="stars">★★★★★</div>
-            <p>« Organisé pour l'anniversaire de mon fils. Les enfants étaient des héros le temps d'un après-midi. Magique. »</p>
-            <figcaption class="who">— Sophie, maman comblée</figcaption>
-        </figure>
+        {% else %}
+        <p>Soyez les premiers à partager votre aventure !</p>
+        {% endfor %}
     </div>
 </section>
 

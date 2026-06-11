@@ -15,7 +15,7 @@ class PrixFixtures extends Fixture
         $manager->persist($prixCampagne);
         $this->addReference('campagne', $prixCampagne);
 
-        $prixSeance = new Prix('Séance','150','séance . 4h');
+        $prixSeance = new Prix('Séance','150€*','séance . 4h');
         $prixSeance->setMettreEnAvant(true);
         $manager->persist($prixSeance);
         $this->addReference('seance', $prixSeance);

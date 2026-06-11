@@ -33,6 +33,9 @@ class Prix
     #[ORM\OneToMany(targetEntity: InfoDuPrix::class, mappedBy: 'idPrix')]
     private Collection $infosDuPrix;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $formuleContact = null;
+
     public function __construct(
         string $nom,
         string $prix,
@@ -125,6 +128,18 @@ class Prix
                 $infosDuPrix->setIdPrix(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFormuleContact(): ?string
+    {
+        return $this->formuleContact;
+    }
+
+    public function setFormuleContact(?string $formuleContact): static
+    {
+        $this->formuleContact = $formuleContact;
 
         return $this;
     }

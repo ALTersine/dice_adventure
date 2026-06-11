@@ -34,9 +34,10 @@
                 {% block navigation %}
                     <ul>
                         <li><a href="{{ path('app_home') }}#aventure">L'aventure</a></li>
-                        <li><a href="{{ path('app_home') }}#formules">Formules</a></li>
-                        <li class="hide-mobile"><a href="{{ path('app_home') }}#deroule">Déroulé</a></li>
+                        <li class="hide-mobile"><a href="{{ path('app_home') }}#news">Nouveautés</a></li>
+                        <li class="hide-mobile"><a href="{{ path('app_home') }}#deroule">Comment ça marche ?</a></li>
                         <li class="hide-mobile"><a href="{{ path('app_home') }}#maitre-du-jeu">Le MJ</a></li>
+                        <li><a href="{{ path('app_home') }}#formules">Formules</a></li>
                         <li><a class="nav-cta" href="{{ path('app_home') }}#contact">Réserver</a></li>
                     </ul>
                 {% endblock %}
@@ -51,23 +52,24 @@
             <div class="site-footer__inner">
                 <div>
                     <a class="brand" href="{{ path('app_home') }}">
-                        <svg class="brand__die" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">
-                            <polygon points="50,5 90,28 90,72 50,95 10,72 10,28"/>
-                            <polygon points="50,18 73,38 50,62 27,38"/>
-                        </svg>
+                    <svg class="brand__die" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="50,5 90,28 90,72 50,95 10,72 10,28"/>
+                        <polygon points="50,18 73,38 50,62 27,38"/>
+                        <path d="M50,5 50,18 M10,28 27,38 M90,28 73,38 M27,38 10,72 M73,38 90,72 M50,62 50,95 M50,62 10,72 M50,62 90,72"/>
+                    </svg>
                         Dice <strong>Adventure</strong>
                     </a>
                     <p>Maître du jeu passionné — vos aventures de jeu de rôle plateau,<br>dés en main, autour de la table.</p>
                 </div>
                 <div class="site-footer__links">
                     <a href="{{ path('app_home') }}#aventure">L'aventure</a>
-                    <a href="{{ path('app_home') }}#formules">Formules</a>
-                    <a href="{{ path('app_home') }}#maitre-du-jeu">Le maître du jeu</a>
+                    <a href="{{ path('app_home') }}">C.G.V</a>
+                    <a href="{{ path('app_home') }}#maitre-du-jeu">Mentions légales</a>
                     <a href="{{ path('app_home') }}#contact">Réserver une partie</a>
                 </div>
             </div>
             <div class="site-footer__bottom">
-                © {{ "now"|date("Y") }} Dice Adventure · L'aventure du dé · Auto-entrepreneur
+                © {{ "now"|date("Y") }} Dice Adventure · L'aventure du dé
             </div>
         </footer>
     </body>

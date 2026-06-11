@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\FraisKM;
+use App\Factory\PrixFactory;
+use App\Repository\AvisRepository;
+use App\Repository\FraisKMRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,12 +12,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
-    {
-        $fraisKM = new FraisKM();
+    public function index(
+        PrixFactory $prixFactory,
+        AvisRepository $avisRepository,
+        FraisKMRepository $fraisKMRepository,
+    ): Response {
         return $this->render('home/index.html.twig', [
-            'page_title' => 'Bienvenue, aventuriers !',
-            'fraisKilometrique' => $fraisKM->getInfo(),
+            'page_title'        => 'Bienvenue, aventuriers !',
+            'tarrif'            => $prixFactory->display(),
+            'avisList'          => $avisRepository->findAllForDisplay(),
+            'fraisKilometrique' => $fraisKMRepository->getInfo(),
         ]);
     }
 }
