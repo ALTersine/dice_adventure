@@ -1,0 +1,285 @@
+{% extends 'base.html.twig' %}
+
+{# ---- Dés en SVG, réutilisables ---- #}
+{% macro d20() %}
+    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="50,5 90,28 90,72 50,95 10,72 10,28"/>
+        <polygon points="50,18 73,38 50,62 27,38"/>
+        <path d="M50,5 50,18 M10,28 27,38 M90,28 73,38 M27,38 10,72 M73,38 90,72 M50,62 50,95 M50,62 10,72 M50,62 90,72"/>
+        <text x="50" y="46" text-anchor="middle" font-size="17" stroke="none" fill="currentColor" font-family="Cinzel, serif" font-weight="700">20</text>
+    </svg>
+{% endmacro %}
+
+{% macro d6() %}
+    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="50,8 86,29 50,50 14,29"/>
+        <polygon points="14,29 50,50 50,92 14,71"/>
+        <polygon points="86,29 50,50 50,92 86,71"/>
+        <circle cx="50" cy="27" r="3.2" fill="currentColor" stroke="none"/>
+        <circle cx="31" cy="58" r="3.2" fill="currentColor" stroke="none"/>
+        <circle cx="31" cy="72" r="3.2" fill="currentColor" stroke="none"/>
+        <circle cx="69" cy="50" r="3.2" fill="currentColor" stroke="none"/>
+        <circle cx="69" cy="64" r="3.2" fill="currentColor" stroke="none"/>
+    </svg>
+{% endmacro %}
+
+{% macro d4() %}
+    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="50,6 92,86 8,86"/>
+        <path d="M50,6 50,64 M50,64 8,86 M50,64 92,86"/>
+        <text x="50" y="58" text-anchor="middle" font-size="16" stroke="none" fill="currentColor" font-family="Cinzel, serif" font-weight="700">4</text>
+    </svg>
+{% endmacro %}
+
+{% macro d10() %}
+    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="50,5 84,38 68,70 32,70 16,38"/>
+        <polygon points="32,70 68,70 50,95"/>
+        <path d="M50,5 50,44 M16,38 50,44 M84,38 50,44 M50,44 32,70 M50,44 68,70"/>
+        <text x="50" y="40" text-anchor="middle" font-size="13" stroke="none" fill="currentColor" font-family="Cinzel, serif" font-weight="700">100</text>
+    </svg>
+{% endmacro %}
+
+{% import _self as dice %}
+
+{% block body %}
+
+{# =================== HERO =================== #}
+<section class="hero">
+    <div class="hero__dice" aria-hidden="true">
+        <span class="die-deco d1">{{ dice.d20() }}</span>
+        <span class="die-deco d2">{{ dice.d6() }}</span>
+        <span class="die-deco d3">{{ dice.d20() }}</span>
+        <span class="die-deco d4">{{ dice.d4() }}</span>
+        <span class="die-deco d5">{{ dice.d10() }}</span>
+    </div>
+    <div class="hero__inner">
+        <p class="hero__eyebrow">Maître du jeu · Jeu de rôle sur table</p>
+        <h1 class="hero__title">Lancez les dés.<br>Vivez l'<em>aventure</em>.</h1>
+        <p class="hero__subtitle">
+            Réunissez votre groupe, je m'occupe du reste. Dice Adventure crée et
+            anime pour vous des sessions de jeu de rôle plateau façon Donjons&nbsp;&amp;&nbsp;Dragons :
+            une histoire sur mesure, des donjons à explorer, et un maître du jeu pour vous guider.
+        </p>
+        <div class="hero__actions">
+            <a class="btn btn--primary" href="#contact">⚔️ Réserver une partie</a>
+            <a class="btn btn--ghost" href="#formules">Voir les formules</a>
+        </div>
+        <ul class="hero__stats">
+            <li><span class="num">120+</span><span class="lbl">parties menées</span></li>
+            <li><span class="num">3 à 6</span><span class="lbl">joueurs par table</span></li>
+            <li><span class="num">100%</span><span class="lbl">sur mesure</span></li>
+        </ul>
+    </div>
+</section>
+
+{# =================== POURQUOI / AVENTURE =================== #}
+<section class="section" id="aventure">
+    <div class="section__head">
+        <span class="section__kicker">Pourquoi Dice Adventure</span>
+        <h2>Une table, des dés, mille histoires</h2>
+        <p>Pas besoin d'être un joueur expérimenté. Apportez votre curiosité, je fournis l'aventure.</p>
+    </div>
+    <div class="grid grid--3">
+        <article class="card">
+            <div class="card__die">{{ dice.d20() }}</div>
+            <h3>Des histoires sur mesure</h3>
+            <p>Chaque campagne est écrite pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
+        </article>
+        <article class="card">
+            <div class="card__die">{{ dice.d6() }}</div>
+            <h3>Tout le matériel fourni</h3>
+            <p>Dés, fiches de personnages, plateaux et figurines : sortez simplement le sac à dos, ouvrez une potion, et plongez dans le donjon.</p>
+        </article>
+        <article class="card">
+            <div class="card__die">{{ dice.d4() }}</div>
+            <h3>Un maître du jeu dédié</h3>
+            <p>Je gère les règles, les monstres et le suspense pour que vous viviez chaque rebondissement sans jamais décrocher de l'histoire.</p>
+        </article>
+    </div>
+</section>
+
+{# =================== NEWS =================== #}
+<section class="section--alt" id="news">
+    <div class="section__inner">
+        <div class="section__head">
+            <span class="section__kicker">Les infos de Dice Adventure</span>
+            <h2>Quoi de neuf en ce moment ?</h2>
+            <p>Découvrez nos dernières actualités.</p>
+        </div>
+        <div>
+           <!--Boucle sur les news-->
+        </div>
+    </div>
+</section>
+
+{# =================== DÉROULÉ =================== #}
+<section class="section" id="deroule">
+    <div class="section__head">
+        <span class="section__kicker">Comment ça se passe</span>
+        <h2>De l'idée à la table en 4 jets de dé</h2>
+    </div>
+    <div class="steps">
+        <div class="step">
+            <div class="step__die">{{ dice.d4() }}</div>            
+            <h3>Premier jet : On échange</h3>
+            <p>Vous me dites qui joue, vos envies et votre niveau. Je propose un univers.</p>
+        </div>
+        <div class="step">
+            <div class="step__die">{{ dice.d6() }}</div>
+            <h3>Second jet : Je prépare</h3>
+            <p>J'écris le scénario, crée vos personnages et prépare tout le matériel.</p>
+        </div>
+        <div class="step">
+            <div class="step__die">{{ dice.d10() }}</div>
+            <h3>Troisième jet : On se réunit</h3>
+            <p>Chez vous ou sur le lieu de votre choix, autour de la table on se prépare à l'aventure.</p>
+        </div>
+        <div class="step">
+            <div class="step__die">{{ dice.d20() }}</div>
+            <h3>Quatrième jet : On joue</h3>
+            <p>Je mène l'aventure, vous prenez les décisions. Arriverez-vous au bout de la quête ?</p>
+        </div>
+    </div>
+</section>
+
+{# =================== LE MAÎTRE DU JEU =================== #}
+<section class="mj" id="maitre-du-jeu">
+    <div class="mj__inner">
+        <div class="mj__portrait">
+            <span class="die-deco">{{ dice.d20() }}</span>
+        </div>
+        <div>
+            <span class="section__kicker">Le maître du jeu</span>
+            <h2>Votre guide dans le donjon</h2>
+            <p>
+                Rôliste depuis plus de vingt ans et maître du jeu passionné, je consacre
+                aujourd'hui mon activité à une seule chose : vous faire
+                vivre des aventures mémorables autour d'une table.
+            </p>
+            <p>
+                Mon plaisir, c'est de voir un groupe rire, hésiter, triompher — et repartir
+                avec des souvenirs. Débutant complet ou vétéran des dés, vous trouverez
+                votre place à ma table.
+            </p>
+            <ul class="mj__tags">
+                <li>Donjons &amp; Dragons</li>
+                <li>Heroic fantasy</li>
+                <li>Enquête &amp; mystère</li>
+                <li>Sur mesure</li>
+                <li>Tous niveaux</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+{# =================== FORMULES =================== #}
+<section class="section--alt" id="formules">
+    <div class="section__inner">
+        <div class="section__head">
+            <span class="section__kicker">Les formules</span>
+            <h2>Choisissez votre quête</h2>
+            <p>De la première partie d'initiation à la grande campagne épique, il y a une aventure pour chaque groupe.</p>
+        </div>
+        <div class="grid grid--3">
+            <article class="formule">
+                <h3>Campagne</h3>
+                <p class="formule__price"><!--tarrif.campagne-->€* <span>/ joueur · séance</span></p>
+                <ul>
+                    <li>Une histoire au long cours</li>
+                    <li>Personnages qui évoluent</li>
+                    <li>Donjons, intrigues &amp; boss</li>
+                    <li>Séances régulières à votre rythme</li>
+                </ul>
+                <a class="btn btn--dark" href="#contact">Lancer la campagne</a>
+            </article>
+            <article class="formule formule--phare">
+            <span class="formule__badge">Le plus choisi</span>
+                <h3>Initiation</h3>
+                <p class="formule__price"><!--tarrif.seance-->€* <span>/ séance · 4h</span></p>
+                <ul>
+                    <li>Découverte du jeu de rôle pour 3 à 6 joueurs</li>
+                    <li>Personnages prêts à jouer</li>
+                    <li>Un scénario d'une séance</li>
+                    <li>Idéal entre amis ou en famille</li>
+                </ul>
+                <a class="btn btn--primary" href="#contact">Réserver l'initiation</a>
+            </article>
+            <article class="formule">
+                <h3>Événement</h3>
+                <p class="formule__price">Sur devis <span>· particulier · entreprise</span></p>
+                <ul>
+                    <li>Anniversaires, team building, EVJF/EVG (Enterrement Vie de Jeune Fille / Garçon), cohésion d'équipe...</li>
+                    <li>Formule entièrement adaptable à vos besoins</li>
+                    <li>Scénario et thématique sur mesure</li>
+                </ul>
+                <a class="btn btn--dark" href="#contact">Demander un devis</a>
+            </article>
+        </div>
+        <div>
+        <p>*+ Frais kilométriques ({{fraisKilometrique}})</p>
+        </div>
+    </div>
+</section>
+
+{# =================== TÉMOIGNAGES =================== #}
+<section class="section" id="temoignages">
+    <div class="section__head">
+        <span class="section__kicker">Ils ont lancé les dés</span>
+        <h2>Ce que disent les aventuriers</h2>
+    </div>
+    <div class="quotes">
+        <figure class="quote">
+            <div class="stars">★★★★★</div>
+            <p>« On n'avait jamais fait de jeu de rôle. Au bout de dix minutes, on était complètement dans l'histoire. Soirée inoubliable ! »</p>
+            <figcaption class="who">— Camille &amp; sa bande</figcaption>
+        </figure>
+        <figure class="quote">
+            <div class="stars">★★★★★</div>
+            <p>« Un maître du jeu en or. Les rebondissements, les voix des personnages, le suspense… On a réservé la suite de la campagne aussitôt. »</p>
+            <figcaption class="who">— Thomas, joueur régulier</figcaption>
+        </figure>
+        <figure class="quote">
+            <div class="stars">★★★★★</div>
+            <p>« Organisé pour l'anniversaire de mon fils. Les enfants étaient des héros le temps d'un après-midi. Magique. »</p>
+            <figcaption class="who">— Sophie, maman comblée</figcaption>
+        </figure>
+    </div>
+</section>
+
+{# =================== CONTACT =================== #}
+<section class="contact" id="contact">
+    <div class="contact__inner">
+        <div class="contact__intro">
+            <span class="section__kicker">Réserver une partie</span>
+            <h2>Prêt à entrer dans l'aventure ?</h2>
+            <p>
+                Dites-moi en quelques mots qui vous êtes et ce que vous recherchez.
+                Je reviens vers vous avec une proposition d'aventure taillée pour votre groupe.
+            </p>
+            <ul class="contact__list">
+                <li><span class="ico">📜</span> Réponse sous 48&nbsp;h</li>
+                <li><span class="ico">🎲</span> Sans engagement</li>
+                <li><span class="ico">🧪</span> Débutants bienvenus</li>
+            </ul>
+        </div>
+        <form method="post" action="#" class="contact-form">
+            <h3>Contacter le maître du jeu</h3>
+            <div class="form-row">
+                <label for="contact-nom">Votre nom</label>
+                <input type="text" id="contact-nom" name="nom" placeholder="Aragorn, fils d'Arathorn…" required>
+            </div>
+            <div class="form-row">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" name="email" placeholder="vous@exemple.fr" required>
+            </div>
+            <div class="form-row">
+                <label for="contact-message">Votre quête</label>
+                <textarea id="contact-message" name="message" rows="5" placeholder="Combien de joueurs ? Débutants ? Une date en tête ? Une envie d'univers ?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Envoyer au maître du jeu</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{% block meta_description %}Dice Adventure : un maître du jeu passionné anime vos sessions de jeu de rôle plateau façon Donjons & Dragons. Réunissez votre groupe, lancez les dés, vivez l'aventure.{% endblock %}">
+        <title>{% block title %}{{ page_title|default('Maître du jeu — sessions de jeu de rôle plateau') }} – Dice Adventure{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221em%22 font-size=%22100%22>🎲</text></svg>">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <header class="site-header">
+            <a class="brand" href="{{ path('app_home') }}">
+                {# D20 stylisé #}
+                <svg class="brand__die" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="50,5 90,28 90,72 50,95 10,72 10,28"/>
+                    <polygon points="50,18 73,38 50,62 27,38"/>
+                    <path d="M50,5 50,18 M10,28 27,38 M90,28 73,38 M27,38 10,72 M73,38 90,72 M50,62 50,95 M50,62 10,72 M50,62 90,72"/>
+                </svg>
+                Dice <strong>Adventure</strong>
+            </a>
+            <nav class="main-nav">
+                {% block navigation %}
+                    <ul>
+                        <li><a href="{{ path('app_home') }}#aventure">L'aventure</a></li>
+                        <li><a href="{{ path('app_home') }}#formules">Formules</a></li>
+                        <li class="hide-mobile"><a href="{{ path('app_home') }}#deroule">Déroulé</a></li>
+                        <li class="hide-mobile"><a href="{{ path('app_home') }}#maitre-du-jeu">Le MJ</a></li>
+                        <li><a class="nav-cta" href="{{ path('app_home') }}#contact">Réserver</a></li>
+                    </ul>
+                {% endblock %}
+            </nav>
+        </header>
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <div>
+                    <a class="brand" href="{{ path('app_home') }}">
+                        <svg class="brand__die" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="50,5 90,28 90,72 50,95 10,72 10,28"/>
+                            <polygon points="50,18 73,38 50,62 27,38"/>
+                        </svg>
+                        Dice <strong>Adventure</strong>
+                    </a>
+                    <p>Maître du jeu passionné — vos aventures de jeu de rôle plateau,<br>dés en main, autour de la table.</p>
+                </div>
+                <div class="site-footer__links">
+                    <a href="{{ path('app_home') }}#aventure">L'aventure</a>
+                    <a href="{{ path('app_home') }}#formules">Formules</a>
+                    <a href="{{ path('app_home') }}#maitre-du-jeu">Le maître du jeu</a>
+                    <a href="{{ path('app_home') }}#contact">Réserver une partie</a>
+                </div>
+            </div>
+            <div class="site-footer__bottom">
+                © {{ "now"|date("Y") }} Dice Adventure · L'aventure du dé · Auto-entrepreneur
+            </div>
+        </footer>
+    </body>
+</html>
