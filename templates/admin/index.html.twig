@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration – Dice Adventure{% endblock %}
+
+{% block body %}
+<section class="admin">
+    <div class="admin__inner">
+
+        <header class="admin__head">
+            <div>
+                <span class="section__kicker">Espace maître du jeu</span>
+                <h1>Administration</h1>
+                <p>Gérez vos formules, vos frais kilométriques et les avis de vos aventuriers.</p>
+            </div>
+            <div class="admin__head-actions">
+                <a class="btn btn--ghost" href="{{ path('app_home') }}">Voir le site</a>
+                <a class="btn btn--dark" href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
+        </header>
+
+        {# ---- Messages flash ---- #}
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="admin-flash admin-flash--{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        {# ============================================================
+           PRIX (+ infos)
+           ============================================================ #}
+        <section class="admin-block" id="admin-prix">
+            <h2 class="admin-block__title">🎲 Formules &amp; tarifs</h2>
+
+            <div class="admin-grid">
+                {% for prix in prixList %}
+                    <div class="admin-card">
+                        <form method="post" action="{{ path('app_admin_prix_edit', { id: prix.id }) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_prix_edit_' ~ prix.id) }}">
+
+                            <div class="admin-field">
+                                <label>Nom de la formule</label>
+                                <input type="text" name="nom" value="{{ prix.nom }}" required>
+                            </div>
+
+                            <div class="admin-field">
+                                <label>Prix affiché</label>
+                                <input type="text" name="prixAffiche" value="{{ prix.prixAffiche }}" required>
+                            </div>
+                                
+                            <div class="admin-field">
+                                <label>Unité (par...)</label>
+                                <input type="text" name="prixPar" value="{{ prix.prixPar }}" required>
+                            </div>
+                           
+
+                            <div class="admin-field">
+                                <label>Texte du bouton de contact</label>
+                                <input type="text" name="formuleContact" value="{{ prix.formuleContact }}" placeholder="Contactez-nous">
+                            </div>
+
+                            <div class="admin-field">
+                                <label>Infos (une par ligne)</label>
+                                <textarea name="infos" rows="4">{{ prix.infosDuPrix|map(i => i.info)|join("\n") }}</textarea>
+                            </div>
+
+                            <label class="admin-check">
+                                <input type="checkbox" name="mettreEnAvant" value="1" {{ prix.mettreEnAvant ? 'checked' }}>
+                                Mettre en avant (formule phare)
+                            </label>
+
+                            <div class="admin-card__actions">
+                                <button type="submit" class="btn btn--primary">Enregistrer</button>
+                            </div>
+                        </form>
+
+                        <form method="post"
+                              action="{{ path('app_admin_prix_delete', { id: prix.id }) }}"
+                              onsubmit="return confirm('Supprimer définitivement la formule « {{ prix.nom|e('js') }} » ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_prix_delete_' ~ prix.id) }}">
+                            <button type="submit" class="btn btn--danger">Supprimer cette formule</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p class="admin-empty">Aucune formule pour le moment.</p>
+                {% endfor %}
+
+                {# ---- Création d'une nouvelle formule ---- #}
+                <form class="admin-card admin-card--new" method="post" action="{{ path('app_admin_prix_new') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_prix_new') }}">
+                    <h3 class="admin-card__new-title">➕ Nouvelle formule</h3>
+
+                    <div class="admin-field">
+                        <label>Nom de la formule</label>
+                        <input type="text" name="nom" required>
+                    </div>
+                    
+                    <div class="admin-field">
+                        <label>Prix affiché</label>
+                        <input type="text" name="prixAffiche" placeholder="150 ou Sur devis" required>
+                    </div>
+                    
+                    <div class="admin-field">
+                        <label>Unité (par...)</label>
+                        <input type="text" name="prixPar" placeholder="séance · 4h" required>
+                    </div>
+                    
+                    <div class="admin-field">
+                        <label>Texte du bouton de contact</label>
+                        <input type="text" name="formuleContact" placeholder="Contactez-nous">
+                    </div>
+                    <div class="admin-field">
+                        <label>Infos (une par ligne)</label>
+                        <textarea name="infos" rows="4" placeholder="Personnages prêts à jouer&#10;Un scénario d'une séance"></textarea>
+                    </div>
+                    <label class="admin-check">
+                        <input type="checkbox" name="mettreEnAvant" value="1">
+                        Mettre en avant (formule phare)
+                    </label>
+                    <div class="admin-card__actions">
+                        <button type="submit" class="btn btn--primary">Créer la formule</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        {# ============================================================
+           FRAIS KILOMÉTRIQUES
+           ============================================================ #}
+        <section class="admin-block" id="admin-frais">
+            <h2 class="admin-block__title">🚗 Frais kilométriques</h2>
+            <form class="admin-card admin-card--inline" method="post" action="{{ path('app_admin_fraiskm') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('admin_fraiskm') }}">
+                <div class="admin-field">
+                    <label>Mention affichée sous les tarifs</label>
+                    <input type="text" name="info" value="{{ fraisKilometrique }}" placeholder="> 15 km, 50 centimes / km">
+                </div>
+                <button type="submit" class="btn btn--primary">Mettre à jour</button>
+            </form>
+        </section>
+
+        {# ============================================================
+           AVIS
+           ============================================================ #}
+        <section class="admin-block" id="admin-avis">
+            <h2 class="admin-block__title">⭐ Avis des aventuriers</h2>
+
+            <div class="admin-grid">
+                {% for avis in avisList %}
+                    <div class="admin-card admin-card--avis">
+                        <div class="admin-avis__stars">
+                            {% for i in 1..avis.note %}★{% endfor %}{% if avis.note < 5 %}{% for i in avis.note + 1..5 %}☆{% endfor %}{% endif %}
+                        </div>
+                        <p class="admin-avis__message">« {{ avis.message }} »</p>
+                        <p class="admin-avis__author">
+                            — {{ avis.auteur }}{% if avis.infosSuppAuteur %}, {{ avis.infosSuppAuteur }}{% endif %}
+                        </p>
+                        <form method="post"
+                              action="{{ path('app_admin_avis_delete', { id: avis.id }) }}"
+                              onsubmit="return confirm('Supprimer cet avis de {{ avis.auteur|e('js') }} ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_avis_delete_' ~ avis.id) }}">
+                            <button type="submit" class="btn btn--danger">Supprimer</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p class="admin-empty">Aucun avis pour le moment.</p>
+                {% endfor %}
+
+                {# ---- Ajout d'un avis ---- #}
+                <form class="admin-card admin-card--new" method="post" action="{{ path('app_admin_avis_new') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_avis_new') }}">
+                    <h3 class="admin-card__new-title">➕ Nouvel avis</h3>
+
+                    <div class="admin-field">
+                        <label>Auteur</label>
+                        <input type="text" name="auteur" required>
+                    </div>
+                    <div class="admin-field">
+                        <label>Info auteur (optionnel)</label>
+                        <input type="text" name="infosSuppAuteur" placeholder="joueuse régulière">
+                    </div>
+                    <div class="admin-field">
+                        <label>Note (0 à 5)</label>
+                        <input type="number" name="note" min="0" max="5" value="5" required>
+                    </div>
+                    <div class="admin-field">
+                        <label>Message</label>
+                        <textarea name="message" rows="3" required></textarea>
+                    </div>
+                    <div class="admin-card__actions">
+                        <button type="submit" class="btn btn--primary">Ajouter l'avis</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+</section>
+{% endblock %}
