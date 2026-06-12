@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * Tableau de bord d'administration réservé aux utilisateurs connectés :
  * gestion des prix (et de leurs infos), des frais kilométriques et des avis.
  */
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 #[Route('/ecranMJ')]
 class AdminController extends AbstractController
 {

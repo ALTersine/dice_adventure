@@ -71,7 +71,7 @@
         <article class="card">
             <div class="card__die">{{ dice.d6_1() }}</div>
             <h3>Des histoires sur mesure</h3>
-            <p>Chaque campagne est écrite pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
+            <p>Chaque scénario est écrit pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
         </article>
         <article class="card">
             <div class="card__die">{{ dice.d20() }}</div>
@@ -140,7 +140,7 @@
             <span class="section__kicker">Le maître du jeu</span>
             <h2>Votre guide dans le donjon</h2>
             <p>
-                Rôliste depuis plus de vingt ans et maître du jeu passionné, je consacre
+                Rôliste depuis plus de dix ans et maître du jeu passionné, je consacre
                 aujourd'hui mon activité à une seule chose : vous faire
                 vivre des aventures mémorables autour d'une table.
             </p>
@@ -226,21 +226,43 @@
                 <li><span class="ico">🧪</span> Débutants bienvenus</li>
             </ul>
         </div>
-        <form method="post" action="#" class="contact-form">
+        <form method="post" action="{{ path('app_contact') }}" class="contact-form" data-turbo="false">
             <h3>Contacter le maître du jeu</h3>
+
+            {% for msg in app.flashes('contact_success') %}
+                <p class="form-feedback form-feedback--ok">{{ msg }}</p>
+            {% endfor %}
+            {% for msg in app.flashes('contact_error') %}
+                <p class="form-feedback form-feedback--err">{{ msg }}</p>
+            {% endfor %}
+
             <div class="form-row">
                 <label for="contact-nom">Votre nom</label>
-                <input type="text" id="contact-nom" name="nom" placeholder="Aragorn, fils d'Arathorn…" required>
+                <input type="text" id="contact-nom" name="nom" maxlength="100" placeholder="Aragorn, fils d'Arathorn…" required>
             </div>
             <div class="form-row">
                 <label for="contact-email">Email</label>
-                <input type="email" id="contact-email" name="email" placeholder="vous@exemple.fr" required>
+                <input type="email" id="contact-email" name="email" maxlength="180" placeholder="vous@exemple.fr" required>
             </div>
             <div class="form-row">
                 <label for="contact-message">Votre quête</label>
-                <textarea id="contact-message" name="message" rows="5" placeholder="Combien de joueurs ? Débutants ? Une date en tête ? Une envie d'univers ?" required></textarea>
+                <textarea id="contact-message" name="message" rows="5" maxlength="5000" placeholder="Combien de joueurs ? Débutants ? Une date en tête ? Une envie d'univers ?" required></textarea>
             </div>
+            <div class="form-row">
+                <label for="contact-captcha">🎲 {{ captcha_question }}</label>
+                <input type="text" id="contact-captcha" name="captcha" inputmode="numeric" autocomplete="off" placeholder="Le total des deux dés" required>
+            </div>
+            {# Honeypot anti-spam : champ invisible pour les humains, rempli par les robots #}
+            <div class="form-row hp-field" aria-hidden="true">
+                <label for="contact-site-web">Ne pas remplir ce champ</label>
+                <input type="text" id="contact-site-web" name="site_web" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="_token" value="{{ csrf_token('contact_form') }}">
             <button type="submit" class="btn btn--primary">Envoyer au maître du jeu</button>
+            <p class="form-note">
+                Les informations saisies sont uniquement utilisées pour répondre à votre demande
+                et ne sont jamais transmises à des tiers.
+            </p>
         </form>
     </div>
 </section>

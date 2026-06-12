@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block meta_description %}Conditions générales de vente des prestations Dice Adventure : sessions de jeu de rôle sur table animées par un maître du jeu professionnel.{% endblock %}
+
+{% block body %}
+<article class="legal">
+    <span class="section__kicker">Informations légales</span>
+    <h1>Conditions générales de vente</h1>
+    <p class="legal__maj">Dernière mise à jour : 12 juin 2026</p>
+
+    <h2>1. Objet et champ d'application</h2>
+    <p>
+        Les présentes conditions générales de vente (« CGV ») régissent les prestations
+        d'animation de sessions de jeu de rôle sur table proposées par Benjamin Bremaud,
+        entrepreneur individuel exerçant sous le nom commercial <strong>Dice Adventure</strong>
+        (SIRET 103&nbsp;303&nbsp;624&nbsp;000&nbsp;11)
+        (« le Prestataire ») à ses clients (« le Client »), via le site Dice Adventure.
+        Toute réservation implique l'acceptation sans réserve des présentes CGV.
+    </p>
+
+    <h2>2. Prestations</h2>
+    <p>
+        Le Prestataire conçoit et anime des sessions de jeu de rôle sur table (scénario,
+        personnages, matériel de jeu fournis) au lieu choisi d'un commun accord avec le Client.
+        Le détail des formules (séance découverte, pack, campagne…) est présenté sur la page
+        <a href="{{ path('app_home') }}#formules">Formules</a> du site.
+    </p>
+
+    <h2>3. Prix</h2>
+    <p>
+        Les prix affichés sur le site sont exprimés en euros, (TTC / TVA non applicable, art. 293 B du CGI…). 
+        Des frais kilométriques s'ajoutent selon le lieu de la prestation, dans les conditions indiquées sur le site.
+        Les prestations « sur devis » font l'objet d'une proposition personnalisée, valable 30 jours (durée de validité du devis).
+    </p>
+
+    <h2>4. Réservation</h2>
+    <p>
+        La demande s'effectue via le <a href="{{ path('app_home') }}#contact">formulaire de
+        contact</a>. Le Prestataire adresse au Client une proposition (date, lieu, formule,
+        prix). La réservation devient ferme à l'acceptation écrite de cette proposition par le
+        Client et, le cas échéant, au versement de l'acompte prévu à l'article 5.
+    </p>
+
+    <h2>5. Paiement</h2>
+    <p>
+        La réservation est confirmée par le versement d'un acompte de <strong>30&nbsp;%</strong>
+        du prix total de la prestation. Le solde (70&nbsp;%) est dû à la réalisation de la
+        prestation, le jour de la session.
+        Moyens de paiement acceptés : virement bancaire.
+    </p>
+
+    <h2>6. Droit de rétractation</h2>
+    <p>
+        Pour les réservations conclues à distance, le Client consommateur dispose d'un délai de
+        rétractation de quatorze (14) jours à compter de la conclusion du contrat
+        (art. L221-18 du Code de la consommation). Conformément à l'article L221-28 12° du même
+        code, ce droit ne s'applique pas aux prestations de loisirs devant être fournies à une
+        date déterminée : une fois la date de session convenue, la réservation ne peut être
+        annulée que dans les conditions de l'article 7.
+    </p>
+
+    <h2>7. Annulation et report</h2>
+    <p>
+        En cas d'annulation par le Client, les sommes déjà versées (acompte et, le cas échéant,
+        solde) sont remboursées selon le barème suivant, calculé par rapport à la date de
+        session convenue :
+    </p>
+    <ul>
+        <li><strong>plus de 7 jours</strong> avant la session : remboursement intégral des
+            sommes versées ;</li>
+        <li><strong>entre 7 et 3 jours</strong> avant la session : remboursement de
+            50&nbsp;% des sommes versées ;</li>
+        <li><strong>moins de 3 jours</strong> avant la session : aucun remboursement, les
+            sommes versées restent acquises au Prestataire.</li>
+    </ul>
+    <p>
+        Le solde prévu à l'article 5 n'est dû qu'en cas de réalisation de la prestation.
+        En cas d'annulation par le Prestataire, les sommes versées sont intégralement
+        remboursées ou la session reportée, au choix du Client.
+    </p>
+
+    <h2>8. Déroulement de la prestation</h2>
+    <p>
+        Le Client s'assure de disposer d'un espace adapté (table et assises pour l'ensemble des
+        joueurs). Le nombre de joueurs est convenu à la réservation (3 à 6 joueurs par table).
+        Le Prestataire fournit l'intégralité du matériel de jeu. Les mineurs participent sous la
+        responsabilité d'un adulte présent sur place.
+    </p>
+    <p>
+        Le matériel mis à disposition (dés, plateaux, figurines, fiches…) reste la propriété du
+        Prestataire. Le Client est responsable des dégradations ou pertes de ce matériel
+        survenues pendant la session de son fait ou de celui des participants ; le remplacement
+        ou la remise en état du matériel concerné pourra lui être facturé.
+    </p>
+
+    <h2>9. Responsabilité</h2>
+    <p>
+        Le Prestataire est tenu à une obligation de moyens dans l'animation des sessions. Il ne
+        saurait être tenu responsable des dommages résultant d'une cause étrangère à la
+        prestation (lieu inadapté, fait d'un participant, force majeure). La responsabilité du
+        Prestataire est en tout état de cause limitée au montant de la prestation concernée.
+    </p>
+
+    <h2>10. Données personnelles</h2>
+    <p>
+        Les données collectées dans le cadre de la réservation sont traitées dans les conditions
+        décrites dans les <a href="{{ path('app_mentions_legales') }}">mentions légales</a>.
+    </p>
+
+    <h2>11. Médiation de la consommation</h2>
+    <p>
+        Conformément aux articles L611-1 et suivants du Code de la consommation, le Client
+        consommateur peut recourir gratuitement au médiateur de la consommation au près de 
+        la Chambre de commerce de l'industrie (CCI) 28 - Eure-et-Loir à Chartres.
+    </p>
+
+    <h2>12. Droit applicable</h2>
+    <p>
+        Les présentes CGV sont soumises au droit français. À défaut de résolution amiable, tout
+        litige relève des tribunaux compétents dans les conditions de droit commun.
+    </p>
+</article>
+{% endblock %}

@@ -13,7 +13,7 @@ class AvisFixtures extends Fixture
         $avis1 = new Avis();
         $avis1->setAuteur('Alexia');
         $avis1->setInfosSuppAuteur('joueuse régulière');
-        $avis1->setMessage('Les aventures sont vraiment incroyables, toutes mes sessions étaient de grandes réussite. Toujours hâte d\'en refaire');
+        $avis1->setMessage('Les aventures sont vraiment incroyables, toutes mes sessions étaient de grandes réussites. Toujours hâte d\'en refaire');
         $avis1->setNote(5);
         $manager->persist($avis1);
 

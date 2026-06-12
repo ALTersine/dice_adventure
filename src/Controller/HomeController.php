@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Factory\PrixFactory;
 use App\Repository\AvisRepository;
 use App\Repository\FraisKMRepository;
+use App\Service\ContactCaptcha;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,12 +17,14 @@ class HomeController extends AbstractController
         PrixFactory $prixFactory,
         AvisRepository $avisRepository,
         FraisKMRepository $fraisKMRepository,
+        ContactCaptcha $contactCaptcha,
     ): Response {
         return $this->render('home/index.html.twig', [
             'page_title'        => 'Bienvenue, aventuriers !',
             'tarrif'            => $prixFactory->display(),
             'avisList'          => $avisRepository->findAllForDisplay(),
             'fraisKilometrique' => $fraisKMRepository->getInfo(),
+            'captcha_question'  => $contactCaptcha->newQuestion(),
         ]);
     }
 }

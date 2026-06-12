@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block meta_description %}Mentions légales du site Dice Adventure : éditeur, hébergeur, propriété intellectuelle et protection des données personnelles.{% endblock %}
+
+{% block body %}
+<article class="legal">
+    <span class="section__kicker">Informations légales</span>
+    <h1>Mentions légales</h1>
+    <p class="legal__maj">Dernière mise à jour : 12 juin 2026</p>
+
+    <p class="legal__avertissement">
+        ⚠️ Les passages <span class="a-completer">surlignés comme ceci</span> sont des textes
+        provisoires (Lorem ipsum) à remplacer avant la mise en ligne.
+    </p>
+
+    <h2>1. Éditeur du site</h2>
+    <p>
+        Le site <strong>Dice Adventure</strong> (ci-après « le Site ») est édité par :<br>
+        <strong>Benjamin Bremaud</strong>, entrepreneur individuel, exerçant sous le nom
+        commercial <strong>Dice Adventure</strong>,<br>
+        immatriculé sous le numéro SIRET 103&nbsp;303&nbsp;624&nbsp;000&nbsp;11,
+        auprès de la CCI Eure-et-Loir.<br>
+        Contact : via le <a href="{{ path('app_home') }}#contact">formulaire de contact</a> du Site
+        ou par email à diceadventure28@gmail.com.
+    </p>
+
+    <h2>2. Directeur de la publication</h2>
+    <p>
+        Le directeur de la publication est Benjamin Bremaud,
+        en qualité d'entrepreneur individuel.
+    </p>
+
+    <h2>3. Conception et réalisation du site</h2>
+    <p>
+        Le Site a été conçu et réalisé par
+        <span class="a-completer">Lorem Ipsum (nom ou raison sociale de l'éditrice du site)</span>,
+        <span class="a-completer">lorem ipsum (statut, SIRET, contact…)</span>.
+    </p>
+
+    <h2>4. Hébergement</h2>
+    <p>
+        Le Site est hébergé par :<br>
+        <span class="a-completer">Lorem Ipsum (nom de l'hébergeur)</span>,
+        <span class="a-completer">lorem ipsum dolor sit amet (adresse de l'hébergeur)</span>,
+        <span class="a-completer">+33 0 00 00 00 00 (téléphone de l'hébergeur)</span>.
+    </p>
+
+    <h2>5. Propriété intellectuelle</h2>
+    <p>
+        L'ensemble des éléments du Site (textes, illustrations, logos, mise en page) est protégé
+        par le droit de la propriété intellectuelle. Toute reproduction, représentation ou
+        adaptation, totale ou partielle, sans autorisation écrite préalable de l'éditeur est
+        interdite. Les noms « Donjons &amp; Dragons » et autres marques citées appartiennent à
+        leurs propriétaires respectifs et ne sont mentionnés qu'à titre descriptif.
+    </p>
+
+    <h2>6. Données personnelles</h2>
+    <p>
+        Les informations saisies dans le formulaire de contact (nom, adresse email, message) sont
+        utilisées uniquement pour répondre à votre demande de réservation. Elles sont adressées au
+        maître du jeu par email et ne sont ni revendues, ni transmises à des tiers, ni utilisées à
+        des fins de prospection.
+    </p>
+    <p>
+        Conformément au Règlement général sur la protection des données (RGPD) et à la loi
+        « Informatique et Libertés », vous disposez d'un droit d'accès, de rectification,
+        d'effacement et d'opposition sur vos données. Pour l'exercer, contactez l'éditeur aux
+        coordonnées indiquées à l'article 1. Vous pouvez également introduire une réclamation
+        auprès de la <a href="https://www.cnil.fr" rel="noopener noreferrer" target="_blank">CNIL</a>.
+    </p>
+
+    <h2>7. Cookies et services tiers</h2>
+    <p>
+        Le Site ne dépose aucun cookie de suivi ou de publicité. Seuls sont utilisés :
+    </p>
+    <ul>
+        <li>un cookie de session technique, strictement nécessaire au fonctionnement du Site
+            (sécurité des formulaires, espace d'administration), exempté de consentement ;</li>
+        <li>le stockage local de votre navigateur pour mémoriser votre choix de consentement,
+            conservé 6 mois maximum ;</li>
+        <li>les polices d'écriture Google&nbsp;Fonts, chargées uniquement après votre accord via
+            la bannière de consentement (ce chargement transmet votre adresse IP à Google).</li>
+    </ul>
+    <p>
+        Vous pouvez modifier votre choix à tout moment en effaçant les données de navigation de
+        votre navigateur pour ce site : la bannière vous sera proposée de nouveau.
+    </p>
+</article>
+{% endblock %}

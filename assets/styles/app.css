@@ -930,3 +930,145 @@ main { flex: 1; }
 @media (max-width: 640px) {
     .admin-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   Bannière de consentement RGPD
+   ============================================ */
+
+/* L'attribut hidden doit gagner sur le display: flex ci-dessous */
+.rgpd-banner[hidden] {
+    display: none;
+}
+
+.rgpd-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 2rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--brun-noir);
+    color: var(--parchemin);
+    box-shadow: 0 -10px 30px rgba(28, 19, 13, 0.35);
+}
+
+.rgpd-banner p {
+    margin: 0;
+    max-width: 56rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.rgpd-banner__actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Détail déplié par le bouton « En savoir plus » */
+.rgpd-banner__detail {
+    flex-basis: 100%;
+    max-width: 56rem;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--or);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--parchemin-fonce);
+}
+
+.btn--info {
+    background: transparent;
+    color: var(--parchemin);
+    border: 1px solid rgba(244, 232, 208, 0.45);
+}
+
+.btn--info:hover {
+    background: rgba(244, 232, 208, 0.12);
+}
+
+/* ============================================
+   Formulaire de contact : anti-spam & retours
+   ============================================ */
+
+/* Honeypot : champ caché aux humains, seuls les robots le remplissent */
+.hp-field {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.form-feedback {
+    padding: 0.75rem 1rem;
+    border-radius: var(--rayon);
+    font-weight: 600;
+}
+
+.form-feedback--ok {
+    background: var(--potion);
+    color: var(--parchemin-clair);
+}
+
+.form-feedback--err {
+    background: var(--rouge-fonce);
+    color: var(--parchemin-clair);
+}
+
+.form-note {
+    font-size: 0.85rem;
+    color: var(--encre-doux);
+    margin: 0.6rem 0 0;
+}
+
+/* ============================================
+   Pages légales (mentions légales, CGV)
+   ============================================ */
+
+.legal {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 4.5rem;
+}
+
+.legal h1 {
+    margin: 0.3rem 0 0.4rem;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    color: var(--rouge-dnd);
+}
+
+.legal h2 {
+    margin: 2.2rem 0 0.6rem;
+    font-size: 1.3rem;
+    color: var(--brun-cuir);
+}
+
+.legal p,
+.legal li {
+    margin: 0.5rem 0;
+}
+
+.legal__maj {
+    font-style: italic;
+    color: var(--encre-doux);
+}
+
+.legal__avertissement {
+    padding: 0.8rem 1.1rem;
+    border-radius: var(--rayon);
+    background: var(--parchemin-fonce);
+    border: 1px dashed var(--or);
+    font-size: 0.95rem;
+}
+
+/* Passage provisoire (Lorem ipsum) à remplacer avant mise en ligne */
+.a-completer {
+    background: rgba(201, 162, 39, 0.28);
+    border-bottom: 2px dotted var(--or);
+    padding: 0 0.25rem;
+}

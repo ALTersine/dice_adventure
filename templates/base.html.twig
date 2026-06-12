@@ -7,9 +7,8 @@
         <title>{% block title %}{{ page_title|default('Maître du jeu — sessions de jeu de rôle plateau') }} – Dice Adventure{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221em%22 font-size=%22100%22>🎲</text></svg>">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+        {# Google Fonts n'est plus chargé ici : la bannière RGPD en bas de page
+           ne le charge qu'après consentement du visiteur (transmission d'IP à Google). #}
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -67,8 +66,8 @@
                 </div>
                 <div class="site-footer__links">
                     <a href="{{ path('app_home') }}#aventure">L'aventure</a>
-                    <a href="{{ path('app_home') }}">C.G.V</a>
-                    <a href="{{ path('app_home') }}#maitre-du-jeu">Mentions légales</a>
+                    <a href="{{ path('app_cgv') }}">C.G.V</a>
+                    <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
                     <a href="{{ path('app_home') }}#contact">Réserver une partie</a>
                 </div>
             </div>
@@ -76,5 +75,88 @@
                 © {{ "now"|date("Y") }} Dice Adventure · L'aventure du dé
             </div>
         </footer>
+
+        {# ---------- Bannière de consentement RGPD ---------- #}
+        <div id="rgpd-banner" class="rgpd-banner" role="dialog" aria-label="Consentement aux services tiers" hidden>
+            <p>
+                🎲 <strong>Votre vie privée</strong> — Ce site ne dépose aucun cookie de suivi ni de publicité,
+                mais certains services de Google sont utilisés pour améliorer votre expérience sur notre site.
+            </p>
+            <p id="rgpd-detail" class="rgpd-banner__detail" hidden>
+                Seules les polices d'écriture sont chargées depuis Google&nbsp;Fonts, ce qui transmet votre
+                adresse IP à Google. Vous pouvez refuser : le site restera parfaitement lisible.
+            </p>
+            <div class="rgpd-banner__actions">
+                <button type="button" id="rgpd-accept" class="btn btn--primary">Accepter</button>
+                <button type="button" id="rgpd-refuse" class="btn btn--dark">Refuser</button>
+                <button type="button" id="rgpd-info" class="btn btn--info" aria-expanded="false" aria-controls="rgpd-detail">ℹ️ En savoir plus</button>
+            </div>
+        </div>
+        <script>
+            (function () {
+                var CLE = 'rgpd-consent';
+                var SIX_MOIS = 1000 * 60 * 60 * 24 * 182;
+                var banniere = document.getElementById('rgpd-banner');
+                if (!banniere) { return; }
+
+                /* Google Fonts n'est injecté qu'après consentement explicite. */
+                function chargerPolices() {
+                    if (document.getElementById('gfonts-css')) { return; }
+                    var pre1 = document.createElement('link');
+                    pre1.rel = 'preconnect';
+                    pre1.href = 'https://fonts.googleapis.com';
+                    var pre2 = document.createElement('link');
+                    pre2.rel = 'preconnect';
+                    pre2.href = 'https://fonts.gstatic.com';
+                    pre2.crossOrigin = 'anonymous';
+                    var css = document.createElement('link');
+                    css.id = 'gfonts-css';
+                    css.rel = 'stylesheet';
+                    css.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap';
+                    document.head.appendChild(pre1);
+                    document.head.appendChild(pre2);
+                    document.head.appendChild(css);
+                }
+
+                function choixMemorise() {
+                    try {
+                        var brut = localStorage.getItem(CLE);
+                        if (!brut) { return null; }
+                        var donnees = JSON.parse(brut);
+                        /* Le consentement expire après 6 mois : on redemande. */
+                        if (!donnees.date || Date.now() - donnees.date > SIX_MOIS) {
+                            localStorage.removeItem(CLE);
+                            return null;
+                        }
+                        return donnees.choix;
+                    } catch (e) {
+                        return null;
+                    }
+                }
+
+                function memoriser(choix) {
+                    try {
+                        localStorage.setItem(CLE, JSON.stringify({ choix: choix, date: Date.now() }));
+                    } catch (e) { /* stockage indisponible : la bannière reviendra */ }
+                    banniere.hidden = true;
+                    if (choix === 'accepte') { chargerPolices(); }
+                }
+
+                var choix = choixMemorise();
+                if (choix === 'accepte') { chargerPolices(); }
+                if (choix === null) { banniere.hidden = false; }
+
+                document.getElementById('rgpd-accept').addEventListener('click', function () { memoriser('accepte'); });
+                document.getElementById('rgpd-refuse').addEventListener('click', function () { memoriser('refuse'); });
+
+                /* Bouton info : déplie / replie le détail sur les services tiers. */
+                var detail = document.getElementById('rgpd-detail');
+                var boutonInfo = document.getElementById('rgpd-info');
+                boutonInfo.addEventListener('click', function () {
+                    detail.hidden = !detail.hidden;
+                    boutonInfo.setAttribute('aria-expanded', String(!detail.hidden));
+                });
+            })();
+        </script>
     </body>
 </html>
