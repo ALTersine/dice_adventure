@@ -154,14 +154,15 @@ img { max-width: 100%; display: block; }
     letter-spacing: 1px;
 }
 
-.brand__die {
-    width: 34px;
-    height: 34px;
-    color: var(--or-clair);
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
-}
-
 .brand strong { color: var(--or-clair); font-weight: 800; }
+
+/* Logo de la navigation : hauteur fixe, largeur automatique.
+   Le viewBox du SVG est déjà recadré sur le dessin (pas de vide haut/bas). */
+.brand__logo {
+    display: block;
+    height: 46px;
+    width: auto;
+}
 
 .main-nav ul {
     list-style: none;
@@ -667,44 +668,51 @@ main { flex: 1; }
     color: var(--encre);
 }
 
-.contact-form h3 {
-    font-size: 1.35rem;
-    color: var(--rouge-dnd);
-    margin: 0 0 1.3rem;
+/* ---------- Formulaire externe (Google Forms, click-to-load) ---------- */
+
+/* Ici la carte parchemin sert de simple cadre : on allège le padding. */
+.contact-form--embed { padding: 1.2rem; }
+
+.contact-embed { width: 100%; }
+
+.contact-embed__iframe {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    height: 1138px;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.contact-embed__placeholder {
     text-align: center;
+    padding: 2.2rem 1.4rem;
+    border: 1px dashed rgba(139, 106, 79, 0.55);
+    border-radius: var(--rayon);
+    background: rgba(232, 216, 184, 0.45);
 }
 
-.form-row { margin-bottom: 1.1rem; display: flex; flex-direction: column; }
-
-.form-row label {
+.contact-embed__title {
     font-family: var(--font-titre);
-    font-size: 0.82rem;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    color: var(--brun-cuir);
-    margin-bottom: 0.4rem;
+    font-size: 1.15rem;
+    color: var(--rouge-dnd);
+    margin: 0 0 0.6rem;
 }
 
-.form-row input,
-.form-row textarea {
-    font-family: var(--font-corps);
-    font-size: 1rem;
-    padding: 0.75rem 0.9rem;
-    border: 1px solid var(--brun-clair);
-    border-radius: 8px;
-    background-color: #fffdf6;
-    color: var(--encre);
-    transition: border-color 0.2s, box-shadow 0.2s;
+.contact-embed__text {
+    font-size: 0.95rem;
+    color: var(--encre-doux);
+    margin: 0 auto 1.3rem;
+    max-width: 420px;
 }
 
-.form-row input:focus,
-.form-row textarea:focus {
-    outline: none;
-    border-color: var(--rouge-dnd);
-    box-shadow: 0 0 0 3px rgba(154, 27, 30, 0.15);
+.contact-embed__alt {
+    font-size: 0.85rem;
+    color: var(--encre-doux);
+    margin: 1.2rem 0 0;
 }
-
-.contact-form .btn { width: 100%; justify-content: center; margin-top: 0.5rem; }
 
 /* ---------- Footer ---------- */
 
@@ -757,6 +765,7 @@ main { flex: 1; }
     .main-nav ul { gap: 0.1rem; }
     .main-nav a { padding: 0.45rem 0.6rem; font-size: 0.78rem; }
     .main-nav .hide-mobile { display: none; }
+    .brand__logo { height: 34px; }
     .section, .section--alt > .section__inner { padding: 3.5rem 0; }
     .grid--3, .grid--2, .steps, .quotes { grid-template-columns: 1fr; }
     .hero__inner { padding: 4.5rem 0 5rem; }
