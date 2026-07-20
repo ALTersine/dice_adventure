@@ -37,8 +37,12 @@ security:
             # switch_user: true
 
     # Note: Only the *first* matching rule is applied
+    # SECURE_SCHEME vaut https par défaut (.env) et http en dev (.env.dev),
+    # car le serveur local tourne sans TLS. Chaque règle doit porter
+    # requires_channel : seule la première règle correspondante s'applique.
     access_control:
-         - { path: ^/ecranMJ, roles: ROLE_ADMIN }
+         - { path: ^/ecranMJ, roles: ROLE_ADMIN, requires_channel: '%env(SECURE_SCHEME)%' }
+         - { path: ^/, requires_channel: '%env(SECURE_SCHEME)%' }
 
 when@test:
     security:
