@@ -55,6 +55,24 @@ pré-remplie est incorrecte) et y mettre :
 dossier personnel, pour les ranger. Ici : `/home2/gual2900/001/dice_adventure`.
 ⚠️ Ne jamais pointer un domaine sur `001/` lui-même : cela exposerait tous les projets.
 
+⚠️ **Permissions de traversée — cause n°1 des 403 sur toute une racine.**
+Apache doit pouvoir traverser *chaque* dossier menant à `public/`. Un dossier
+intermédiaire en `700` (`drwx------`) bloque tout, y compris la page d'accueil,
+avec un 403 générique et aucune trace applicative.
+
+```bash
+chmod 711 ~/001 ~/001/dice_adventure   # traversable, non listable
+# public/ reste en 755, index.php en 644
+ls -ld ~ ~/001 ~/001/dice_adventure ~/001/dice_adventure/public
+```
+Le dossier personnel est en `711` par défaut : c'est le modèle à reproduire.
+`711` plutôt que `755` : Apache traverse, mais le contenu des dossiers projet
+n'est pas listable par les autres comptes du mutualisé.
+
+**Journaux Apache** (pas dans `~/logs` chez o2switch) :
+`ls ~/access-logs/` · `find /usr/local/apache/logs/domlogs -name "*<domaine>*"`
+ou cPanel → *Mesures* → *Erreurs*.
+
 ⚠️ **Le chemin est relatif au dossier personnel.** Saisir `/public` renverrait vers
 `/home2/<compte>/public`, qui n'existe pas. Vérifier avant :
 `ls -d ~/001/dice_adventure/public`
@@ -160,6 +178,17 @@ Ces défauts sont **invisibles en local** et n'apparaissent qu'au premier déplo
 
 Correction : écraser les migrations en une seule, régénérée depuis les entités.
 Possible **uniquement tant qu'aucune base en production ne les a jouées**.
+
+**Repartir d'une base vide après une migration échouée** (la commande SQL est
+`dbal:run-sql`, `doctrine:query:sql` n'existe pas) :
+```bash
+php bin/console doctrine:schema:drop --full-database --force
+php bin/console dbal:run-sql "DROP TABLE IF EXISTS doctrine_migration_versions"
+php bin/console dbal:run-sql "SHOW TABLES"   # DOIT être vide avant de continuer
+```
+Ne jamais oublier `doctrine_migration_versions` : elle mémorise les migrations
+déjà jouées. Si elle survit, Doctrine croit le travail fait et saute des étapes.
+Alternative fiable : phpMyAdmin → sélectionner toutes les tables → Supprimer.
 
 ### 3.3 Compte administrateur
 ```bash
