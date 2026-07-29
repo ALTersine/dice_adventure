@@ -16,28 +16,61 @@ class EvenementRepository extends ServiceEntityRepository
         parent::__construct($registry, Evenement::class);
     }
 
-    //    /**
-    //     * @return Evenement[] Returns an array of Evenement objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Actualités publiées (visibles sur le site), de la plus récente à la plus ancienne.
+     *
+     * @return Evenement[]
+     */
+    public function findPubliees(): array
+    {
+        return $this->findBy(['publier' => true], ['id' => 'DESC']);
+    }
 
-    //    public function findOneBySomeField($value): ?Evenement
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Actualités archivées (retirées du site mais conservées en base).
+     *
+     * @return Evenement[]
+     */
+    public function findArchivees(): array
+    {
+        return $this->findBy(['publier' => false], ['id' => 'DESC']);
+    }
+
+    /**
+     * Crée une actualité (publiée par défaut) et l'enregistre en base.
+     *
+     * @param string|null $image Nom du fichier image déjà déposé dans public/uploads/actualites/
+     */
+    public function create(string $titre, string $description, ?string $image = null): Evenement
+    {
+        $evenement = new Evenement();
+        $evenement->setTitre($titre);
+        $evenement->setDescription($description);
+        $evenement->setPublier(true);
+        $evenement->setImage($image);
+
+        $em = $this->getEntityManager();
+        $em->persist($evenement);
+        $em->flush();
+
+        return $evenement;
+    }
+
+    /**
+     * Archive une actualité : la retire du site tout en gardant la trace en base.
+     */
+    public function archive(Evenement $evenement): void
+    {
+        $evenement->setPublier(false);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Republie une actualité précédemment archivée.
+     */
+    public function publier(Evenement $evenement): void
+    {
+        $evenement->setPublier(true);
+        $this->getEntityManager()->flush();
+    }
 }

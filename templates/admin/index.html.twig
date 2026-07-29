@@ -193,6 +193,74 @@
             </div>
         </section>
 
+        {# ============================================================
+           ACTUALITÉS
+           ============================================================ #}
+        <section class="admin-block" id="admin-actu">
+            <h2 class="admin-block__title">📰 Actualités</h2>
+
+            <div class="admin-grid">
+                {# ---- Nouvelle actualité ---- #}
+                <form class="admin-card admin-card--new" method="post" action="{{ path('app_admin_actu_new') }}" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_actu_new') }}">
+                    <h3 class="admin-card__new-title">➕ Nouvelle actualité</h3>
+
+                    <div class="admin-field">
+                        <label>Titre</label>
+                        <input type="text" name="titre" maxlength="255" required>
+                    </div>
+                    <div class="admin-field">
+                        <label>Contenu</label>
+                        <textarea name="description" rows="4" maxlength="255" required></textarea>
+                    </div>
+                    <div class="admin-field">
+                        <label>Image (optionnel · JPEG, PNG, WebP, GIF · 3 Mo max)</label>
+                        <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif">
+                    </div>
+                    <div class="admin-card__actions">
+                        <button type="submit" class="btn btn--primary">Publier l'actualité</button>
+                    </div>
+                </form>
+
+                {# ---- Actualités publiées ---- #}
+                {% for actu in actusPubliees %}
+                    <div class="admin-card">
+                        <span class="admin-tag admin-tag--on">● En ligne</span>
+                        {% if actu.image %}
+                            <img class="admin-actu__img" src="{{ asset('uploads/actualites/' ~ actu.image) }}" alt="">
+                        {% endif %}
+                        <h3 class="admin-actu__title">{{ actu.titre }}</h3>
+                        <p class="admin-actu__desc">{{ actu.description }}</p>
+                        <form method="post" action="{{ path('app_admin_actu_archive', { id: actu.id }) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_actu_archive_' ~ actu.id) }}">
+                            <button type="submit" class="btn btn--dark">Archiver</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# ---- Actualités archivées ---- #}
+            {% if actusArchivees is not empty %}
+                <h3 class="admin-subtitle">Archives ({{ actusArchivees|length }})</h3>
+                <div class="admin-grid">
+                    {% for actu in actusArchivees %}
+                        <div class="admin-card admin-card--archived">
+                            <span class="admin-tag admin-tag--off">◌ Archivée</span>
+                            {% if actu.image %}
+                                <img class="admin-actu__img" src="{{ asset('uploads/actualites/' ~ actu.image) }}" alt="">
+                            {% endif %}
+                            <h3 class="admin-actu__title">{{ actu.titre }}</h3>
+                            <p class="admin-actu__desc">{{ actu.description }}</p>
+                            <form method="post" action="{{ path('app_admin_actu_publier', { id: actu.id }) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('admin_actu_publier_' ~ actu.id) }}">
+                                <button type="submit" class="btn btn--primary">Republier</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
     </div>
 </section>
 {% endblock %}

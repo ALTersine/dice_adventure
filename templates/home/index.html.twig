@@ -98,15 +98,25 @@
 </section>
 
 {# =================== NEWS =================== #}
-<section class="section--alt" id="news" hidden>
+<section class="section--alt" id="news"{% if actualites is empty %} hidden{% endif %}>
     <div class="section__inner">
         <div class="section__head">
             <span class="section__kicker">Les infos de Dice Adventure</span>
             <h2>Quoi de neuf en ce moment ?</h2>
             <p>Découvrez nos dernières actualités.</p>
         </div>
-        <div>
-           <!--Boucle sur les news-->
+        <div class="news-grid">
+            {% for actu in actualites %}
+                <article class="news-card{{ actu.image ? ' news-card--with-img' }}">
+                    {% if actu.image %}
+                        <img class="news-card__img" src="{{ asset('uploads/actualites/' ~ actu.image) }}" alt="" loading="lazy">
+                    {% endif %}
+                    <div class="news-card__body">
+                        <h3 class="news-card__title">{{ actu.titre }}</h3>
+                        <p class="news-card__text">{{ actu.description }}</p>
+                    </div>
+                </article>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -117,9 +127,17 @@
         <span class="section__kicker">Comment ça se passe</span>
         <h2>De l'idée* à la table en 4 jets de dé</h2>
     </div>
-    <div class="steps">
+    {# data-dice-faces : les faces de dé disponibles pour le tirage aléatoire.
+       ⚠️ Seules les faces 1, 2, 4 et 6 existent en SVG. Pour un vrai d6, ajoutez
+       dice_three.svg et dice_five.svg dans public/img puis leurs deux URLs ici. #}
+    <div class="steps" data-dice-faces='[
+        "{{ asset('img/dice_one.svg') }}",
+        "{{ asset('img/dice_two.svg') }}",
+        "{{ asset('img/dice_four.svg') }}",
+        "{{ asset('img/dice_six.svg') }}"
+    ]'>
         <div class="step">
-            <div class="step__die">{{ dice.d6_1() }}</div>            
+            <div class="step__die">{{ dice.d6_1() }}</div>
             <h3>Premier jet : On échange</h3>
             <p>Vous me dites qui joue, vos envies et votre niveau. Je propose un univers.</p>
         </div>
@@ -143,6 +161,37 @@
     <p>*Merci de me contacter dans un délai d'une semaine avant la date souhaitée pour votre aventure.</p>
     </div>
 </section>
+
+<script>
+    (function () {
+        var steps = document.querySelector('.steps[data-dice-faces]');
+        if (!steps) { return; }
+
+        var faces;
+        try { faces = JSON.parse(steps.getAttribute('data-dice-faces')); }
+        catch (e) { return; }
+        if (!faces || !faces.length) { return; }
+
+        steps.querySelectorAll('.step').forEach(function (step) {
+            var img = step.querySelector('.step__die img');
+            if (!img) { return; }
+
+            var bouton = document.createElement('button');
+            bouton.type = 'button';
+            bouton.className = 'btn btn--dark step__roll';
+            bouton.textContent = '🎲 Lancer le dé';
+            step.appendChild(bouton);
+
+            bouton.addEventListener('click', function () {
+                var face = faces[Math.floor(Math.random() * faces.length)];
+                img.classList.remove('is-rolling');
+                void img.offsetWidth;              /* redémarre l'animation */
+                img.classList.add('is-rolling');
+                img.src = face;
+            });
+        });
+    })();
+</script>
 
 {# =================== LE MAÎTRE DU JEU =================== #}
 <section class="mj" id="maitre-du-jeu">

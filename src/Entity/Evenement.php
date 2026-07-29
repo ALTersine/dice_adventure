@@ -25,9 +25,27 @@ class Evenement
     #[ORM\ManyToOne(inversedBy: 'idEvenement')]
     private ?ImageDEvenement $imageDEvenement = null;
 
+    /**
+     * Nom du fichier image uploadé (stocké dans public/uploads/actualites/), ou null.
+     */
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
     public function getTitre(): ?string

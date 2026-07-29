@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Factory\PrixFactory;
 use App\Repository\AvisRepository;
+use App\Repository\EvenementRepository;
 use App\Repository\FraisKMRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,14 @@ class HomeController extends AbstractController
         PrixFactory $prixFactory,
         AvisRepository $avisRepository,
         FraisKMRepository $fraisKMRepository,
+        EvenementRepository $evenementRepository,
     ): Response {
         return $this->render('home/index.html.twig', [
             'page_title'        => 'Bienvenue, aventuriers !',
             'tarrif'            => $prixFactory->display(),
             'avisList'          => $avisRepository->findAllForDisplay(),
             'fraisKilometrique' => $fraisKMRepository->getInfo(),
+            'actualites'        => $evenementRepository->findPubliees(),
         ]);
     }
 }

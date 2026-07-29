@@ -20,6 +20,11 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+###> app/uploads ###
+# Images d'actualités uploadées depuis l'administration (contenu utilisateur).
+/public/uploads/
+###< app/uploads ###
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/

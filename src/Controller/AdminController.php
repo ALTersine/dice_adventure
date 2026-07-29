@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Factory\PrixFactory;
 use App\Repository\AvisRepository;
+use App\Repository\EvenementRepository;
 use App\Repository\FraisKMRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,11 +27,14 @@ class AdminController extends AbstractController
         PrixFactory $prixFactory,
         FraisKMRepository $fraisKMRepository,
         AvisRepository $avisRepository,
+        EvenementRepository $evenementRepository,
     ): Response {
         return $this->render('admin/index.html.twig', [
             'prixList'          => $prixFactory->readAll(),
             'fraisKilometrique' => $fraisKMRepository->getInfo(),
             'avisList'          => $avisRepository->findBy([], ['id' => 'DESC']),
+            'actusPubliees'     => $evenementRepository->findPubliees(),
+            'actusArchivees'    => $evenementRepository->findArchivees(),
         ]);
     }
 
@@ -176,6 +182,84 @@ class AdminController extends AbstractController
     }
 
     // ----------------------------------------------------------------
+    //  ACTUALITÉS (entité Evenement : publier = affichée / archivée)
+    // ----------------------------------------------------------------
+
+    #[Route('/actualite/new', name: 'app_admin_actu_new', methods: ['POST'])]
+    public function actuNew(Request $request, EvenementRepository $evenementRepository): Response
+    {
+        if (!$this->isCsrfTokenValid('admin_actu_new', (string) $request->request->get('_token'))) {
+            $this->addFlash('error', 'Jeton de sécurité invalide, veuillez réessayer.');
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        $titre       = trim((string) $request->request->get('titre'));
+        $description = trim((string) $request->request->get('description'));
+
+        if ('' === $titre || '' === $description) {
+            $this->addFlash('error', 'Le titre et le contenu de l\'actualité sont obligatoires.');
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        /** @var UploadedFile|null $fichier */
+        $fichier = $request->files->get('image');
+        try {
+            $nomImage = $this->stockerImage($fichier);
+        } catch (\RuntimeException $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        $evenementRepository->create($titre, $description, $nomImage);
+        $this->addFlash('success', 'Actualité publiée.');
+
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[Route('/actualite/{id}/archive', name: 'app_admin_actu_archive', methods: ['POST'])]
+    public function actuArchive(int $id, Request $request, EvenementRepository $evenementRepository): Response
+    {
+        $actu = $evenementRepository->find($id);
+        if (null === $actu) {
+            throw $this->createNotFoundException('Actualité introuvable.');
+        }
+
+        if (!$this->isCsrfTokenValid('admin_actu_archive_'.$id, (string) $request->request->get('_token'))) {
+            $this->addFlash('error', 'Jeton de sécurité invalide, veuillez réessayer.');
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        $evenementRepository->archive($actu);
+        $this->addFlash('success', 'Actualité archivée (elle reste conservée en base).');
+
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[Route('/actualite/{id}/publier', name: 'app_admin_actu_publier', methods: ['POST'])]
+    public function actuPublier(int $id, Request $request, EvenementRepository $evenementRepository): Response
+    {
+        $actu = $evenementRepository->find($id);
+        if (null === $actu) {
+            throw $this->createNotFoundException('Actualité introuvable.');
+        }
+
+        if (!$this->isCsrfTokenValid('admin_actu_publier_'.$id, (string) $request->request->get('_token'))) {
+            $this->addFlash('error', 'Jeton de sécurité invalide, veuillez réessayer.');
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        $evenementRepository->publier($actu);
+        $this->addFlash('success', 'Actualité republiée.');
+
+        return $this->redirectToRoute('app_admin');
+    }
+
+    // ----------------------------------------------------------------
     //  Helpers
     // ----------------------------------------------------------------
 
@@ -206,5 +290,51 @@ class AdminController extends AbstractController
         $value = trim((string) $value);
 
         return '' === $value ? null : $value;
+    }
+
+    /**
+     * Valide et dépose une image uploadée dans public/uploads/actualites/.
+     * Renvoie le nom de fichier généré, ou null si aucun fichier n'a été envoyé.
+     *
+     * @throws \RuntimeException si le fichier est invalide (type, taille) ou en cas d'échec du dépôt
+     */
+    private function stockerImage(?UploadedFile $fichier): ?string
+    {
+        if (null === $fichier) {
+            return null;
+        }
+
+        if (!$fichier->isValid()) {
+            throw new \RuntimeException("L'envoi de l'image a échoué, veuillez réessayer.");
+        }
+
+        // Taille max : 3 Mo.
+        if ($fichier->getSize() > 3 * 1024 * 1024) {
+            throw new \RuntimeException("L'image est trop lourde (3 Mo maximum).");
+        }
+
+        // Type autorisé, déterminé d'après le contenu réel (pas l'extension fournie).
+        $extensions = [
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/webp' => 'webp',
+            'image/gif'  => 'gif',
+        ];
+        $mime = (string) $fichier->getMimeType();
+        if (!isset($extensions[$mime])) {
+            throw new \RuntimeException('Format d\'image non supporté (JPEG, PNG, WebP ou GIF attendu).');
+        }
+
+        // Nom aléatoire + extension dérivée du type MIME : empêche tout fichier exécutable.
+        $nomFichier = bin2hex(random_bytes(8)).'.'.$extensions[$mime];
+        $dossier    = $this->getParameter('kernel.project_dir').'/public/uploads/actualites';
+
+        try {
+            $fichier->move($dossier, $nomFichier);
+        } catch (FileException) {
+            throw new \RuntimeException("L'image n'a pas pu être enregistrée, veuillez réessayer.");
+        }
+
+        return $nomFichier;
     }
 }
