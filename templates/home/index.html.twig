@@ -44,6 +44,7 @@
 
 {# =================== HERO =================== #}
 <section class="hero">
+    <img class="hero__bg" src="{{ asset('img/page_arrivee.webp') }}" alt="" aria-hidden="true">
     <div class="hero__dice" aria-hidden="true">
         <span class="die-deco d2">{{ dice.logo_gold() }}</span>
         <span class="die-deco d1">{{ dice.logo_main() }}</span>
@@ -80,17 +81,17 @@
     </div>
     <div class="grid grid--3">
         <article class="card">
-            <div class="card__die">{{ dice.logo_gold() }}</div>
+            <div class="card__die"><img src="{{asset('img/histoire.webp')}}" alt="Présentation des histoires pour un jeu de rôle sur table"></div>
             <h3>Des histoires sur mesure</h3>
             <p>Chaque scénario est écrit pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
         </article>
         <article class="card">
-            <div class="card__die">{{ dice.logo_main() }}</div>
+            <div class="card__die"><img src="{{asset('img/materiel.webp')}}" alt="Présentation du matériel pour le jeu de rôle sur table"></div>
             <h3>Tout le matériel fourni</h3>
             <p>Dés, fiches de personnages, plateaux et figurines : sortez simplement le sac à dos, ouvrez une potion, et plongez dans le donjon.</p>
         </article>
         <article class="card">
-            <div class="card__die">{{ dice.logo_red() }}</div>
+            <div class="card__die"><img src="{{asset('img/mj.webp')}}" alt="Présentation du maître de jeu lors d'une séance de jeu de rôle sur table"></div>
             <h3>Un maître du jeu dédié</h3>
             <p>Je gère les règles, les monstres et le suspense pour que vous viviez chaque rebondissement sans jamais décrocher de l'histoire.</p>
         </article>
@@ -127,9 +128,6 @@
         <span class="section__kicker">Comment ça se passe</span>
         <h2>De l'idée* à la table en 4 jets de dé</h2>
     </div>
-    {# data-dice-faces : les faces de dé disponibles pour le tirage aléatoire.
-       ⚠️ Seules les faces 1, 2, 4 et 6 existent en SVG. Pour un vrai d6, ajoutez
-       dice_three.svg et dice_five.svg dans public/img puis leurs deux URLs ici. #}
     <div class="steps" data-dice-faces='[
         "{{ asset('img/dice_one.svg') }}",
         "{{ asset('img/dice_two.svg') }}",
@@ -197,7 +195,7 @@
 <section class="mj" id="maitre-du-jeu">
     <div class="mj__inner">
         <div class="mj__portrait">
-            <span class="die-deco">{{ dice.d20() }}</span>
+            <img src="{{asset('img/mj.webp')}}" alt="Présentation du maître de jeu lors d'une séance de jeu de rôle sur table">
         </div>
         <div>
             <span class="section__kicker">Le maître du jeu</span>

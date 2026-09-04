@@ -301,9 +301,33 @@ main { flex: 1; }
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
     background-image:
         repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 6px);
     pointer-events: none;
+}
+
+/* Image de fond du héro : plein cadre, recadrée au centre. */
+.hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+
+/* Voile sombre par-dessus la photo pour garder le texte lisible. */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(160deg, rgba(20, 13, 8, 0.78) 0%, rgba(28, 19, 13, 0.55) 45%, rgba(20, 13, 8, 0.82) 100%),
+        radial-gradient(ellipse at 70% 12%, rgba(154, 27, 30, 0.28), transparent 55%);
 }
 
 .hero__inner {
@@ -437,9 +461,6 @@ main { flex: 1; }
 }
 
 .card__die {
-    width: 58px;
-    height: 58px;
-    color: var(--rouge-dnd);
     margin-bottom: 1.1rem;
 }
 
@@ -618,7 +639,6 @@ main { flex: 1; }
 }
 
 .mj__portrait {
-    aspect-ratio: 1 / 1;
     border-radius: var(--rayon);
     background:
         radial-gradient(circle at 50% 35%, rgba(201,162,39,0.25), transparent 60%),
