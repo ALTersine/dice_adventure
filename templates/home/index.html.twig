@@ -57,44 +57,47 @@
         <h1 class="hero__title">Lancez les dés.<br>Vivez l'<em>aventure</em>.</h1>
         <p class="hero__subtitle">
             Réunissez votre groupe, je m'occupe du reste. Dice Adventure crée et
-            anime pour vous des sessions de jeu de rôle plateau façon Donjons&nbsp;&amp;&nbsp;Dragons :
-            une histoire sur mesure, des donjons à explorer, et un maître du jeu pour vous guider.
+            anime pour vous des sessions de jeu de rôle sur table :
+            une histoire sur mesure, des personnages mémorables et un maître du jeu pour vous guider.
         </p>
         <div class="hero__actions">
             <a class="btn btn--primary" href="#contact">⚔️ Réserver une partie</a>
             <a class="btn btn--ghost" href="#formules">Voir les formules</a>
         </div>
         <ul class="hero__stats">
-            <li><span class="num">120+</span><span class="lbl">parties menées</span></li>
             <li><span class="num">3 à 6</span><span class="lbl">joueurs par table</span></li>
+            <li><span class="num">Tous niveaux</span><span class="lbl">de joueurs acceptés</span></li>
             <li><span class="num">100%</span><span class="lbl">sur mesure</span></li>
         </ul>
     </div>
 </section>
 
-{# =================== POURQUOI / AVENTURE =================== #}
+{# =================== QU'EST-CE QUE LE JDR =================== #}
 <section class="section" id="aventure">
     <div class="section__head">
-        <span class="section__kicker">Pourquoi Dice Adventure</span>
-        <h2>Une table, des dés, mille histoires</h2>
-        <p>Pas besoin d'être un joueur expérimenté. Apportez votre curiosité, je fournis l'aventure.</p>
+        <span class="section__kicker">Nouveau dans l'aventure ?</span>
+        <h2>Qu'est-ce que le jeu de rôle ?</h2>
+        <p>C'est un jeu qui permet de raconter une histoire de manière collective.
+            Dans cette histoire, il y a deux rôles&nbsp;:</p>
     </div>
-    <div class="grid grid--3">
-        <article class="card">
-            <div class="card__die"><img src="{{asset('img/histoire.webp')}}" alt="Présentation des histoires pour un jeu de rôle sur table"></div>
-            <h3>Des histoires sur mesure</h3>
-            <p>Chaque scénario est écrit pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
-        </article>
-        <article class="card">
-            <div class="card__die"><img src="{{asset('img/materiel.webp')}}" alt="Présentation du matériel pour le jeu de rôle sur table"></div>
-            <h3>Tout le matériel fourni</h3>
-            <p>Dés, fiches de personnages, plateaux et figurines : sortez simplement le sac à dos, ouvrez une potion, et plongez dans le donjon.</p>
-        </article>
-        <article class="card">
-            <div class="card__die"><img src="{{asset('img/mj.webp')}}" alt="Présentation du maître de jeu lors d'une séance de jeu de rôle sur table"></div>
-            <h3>Un maître du jeu dédié</h3>
-            <p>Je gère les règles, les monstres et le suspense pour que vous viviez chaque rebondissement sans jamais décrocher de l'histoire.</p>
-        </article>
+    <div class="jdr-box">
+        <div class="jdr-roles">
+            <div class="jdr-role">
+                <span class="jdr-role__tag">Les joueurs — vous</span>
+                <p>Vous incarnez les personnages qui vivent l'aventure.</p>
+            </div>
+            <div class="jdr-role">
+                <span class="jdr-role__tag">Le maître du jeu — moi</span>
+                <p>J'endosse le rôle de narrateur et je guide les personnages tout au long de l'histoire.</p>
+            </div>
+        </div>
+        <div class="jdr-dice-note">
+            <span class="jdr-die" aria-hidden="true">{{ dice.d6_6() }}</span>
+            <p class="jdr-box__dice">
+                Pendant la partie, nous utilisons des dés&nbsp;: ils décident si vos actions
+                se couronnent de succès… ou virent au drame.
+            </p>
+        </div>
     </div>
 </section>
 
@@ -155,8 +158,28 @@
             <p>Je mène l'aventure, vous prenez les décisions. Arriverez-vous au bout de la quête ?</p>
         </div>
     </div>
-    <div style="margin-top: 10%;">
+    <div style="margin-top: 1rem;">
     <p>*Merci de me contacter dans un délai d'une semaine avant la date souhaitée pour votre aventure.</p>
+    </div>
+    <div class="rune-sep" role="separator" aria-hidden="true">
+        <span class="rune-sep__icon">{{ dice.d20() }}</span>
+    </div>
+        <div class="grid grid--3" style="margin-top: 2rem;">
+        <article class="card">
+            <div class="card__die"><img src="{{asset('img/histoire.webp')}}" alt="Présentation des histoires pour un jeu de rôle sur table"></div>
+            <h3>Des histoires sur mesure</h3>
+            <p>Chaque scénario est écrit pour votre groupe : univers, difficulté, ton, tout est adapté à vos envies, que vous soyez des débutants ou rôlistes aguerris.</p>
+        </article>
+        <article class="card">
+            <div class="card__die"><img src="{{asset('img/materiel.webp')}}" alt="Présentation du matériel pour le jeu de rôle sur table"></div>
+            <h3>Tout le matériel fourni</h3>
+            <p>Dés, fiches de personnages, plateaux et figurines : sortez simplement le sac à dos, ouvrez une potion, et plongez dans le donjon.</p>
+        </article>
+        <article class="card">
+            <div class="card__die"><img src="{{asset('img/mj.webp')}}" alt="Présentation du maître de jeu lors d'une séance de jeu de rôle sur table"></div>
+            <h3>Un maître du jeu dédié</h3>
+            <p>Je gère les règles, les monstres et le suspense pour que vous viviez chaque rebondissement sans jamais décrocher de l'histoire.</p>
+        </article>
     </div>
 </section>
 
@@ -211,9 +234,9 @@
                 votre place à ma table.
             </p>
             <ul class="mj__tags">
-                <li>Donjons &amp; Dragons</li>
                 <li>Heroic fantasy</li>
                 <li>Enquête &amp; mystère</li>
+                <li>Science fiction</li>
                 <li>Sur mesure</li>
                 <li>Tous niveaux</li>
             </ul>
